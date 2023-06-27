@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '../lib/accomplished'
+
+TOKEN = ENV['TOKEN']
+
+org = 'tr-commercial-eng'
+project = 'Commercial%20Engineering'
+
+# query_id = 'fd10909d-fe14-4dd9-a2e6-0e115ac6ff54'
+
+def placeholders(month)
+  { month: month.to_s.rjust(2, '0') }
+end
+
+client = Accomplished::AzureDevOps.new(TOKEN)
+
+wiql = IO.read('./wiql2.txt')
+wiql = Mustache.render(wiql, placeholders(ARGV[0]))
+
+ids = client.list_developed_work_item_ids_by_wiql(org, project, wiql)
+work_items = client.get_work_items(org, project, ids)
+
+puts work_items
+  .map(&:to_markdown)
+  .join("\n")
