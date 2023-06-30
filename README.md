@@ -4,8 +4,6 @@
 
 Generate markdown for _your_ developed Azure DevOps Work Items for a given Sprint.
 
-- Only works for the **CMS Support** team!
-
 ```bash
 TOKEN='<ADO_TOKEN_WITH_READ_PERMISSION>' exe/list_my_completed_items <sprint-id>
 ```

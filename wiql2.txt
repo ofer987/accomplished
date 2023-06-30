@@ -8,4 +8,4 @@ WHERE
     [System.AssignedTo] = @me
     AND [System.WorkItemType] = 'User Story'
     AND [System.State] IN ('Approved', 'Approved For Release', 'Business Sprint Testing', 'Business Validation', 'Closed', 'Committed', 'Completed', 'Delivery Review', 'Deploy', 'Design', 'Doing', 'Done', 'Engineering Review', 'In Process', 'In PROD/MONITORING', 'In Progress', 'In QA Testing', 'In Review', 'In Shaping', 'Product Review', 'QA Testing', 'Ready', 'Ready For Deployment', 'Ready For QA Testing', 'Ready for Review', 'Resolved', 'Reviewed', 'Sprint Complete', 'User Acceptance Testing')
-    AND [System.IterationPath] IN ('Commercial Engineering\Commercial Platforms\CMS Support-BAU\Sprints\2023\Sprint {{month}}', 'Commercial Engineering\Commercial Platforms\CMS Support-RoadMap\Sprints\2023\Sprint {{month}}')
+    AND [System.IterationPath] IN ('Commercial Engineering\Commercial Platforms\CMS Support-BAU\Sprints\2023\Sprint {{month}}', 'Commercial Engineering\Commercial Platforms\CMS Support-RoadMap\Sprints\2023\Sprint {{month}}','Commercial Engineering\Marketing and Sales\Marketing\Sprints\2023\Sprint {{month}}')
