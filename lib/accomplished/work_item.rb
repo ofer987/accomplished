@@ -15,7 +15,18 @@ module Accomplished
     end
 
     def assigned_to
-      @assigned_to ||= fields['System.AssignedTo']['displayName']
+      return @assigned_to if defined? @assigned_to
+
+      if fields['System.AssignedTo'].blank? || fields['System.AssignedTo']['displayName'].blank?
+        return @assigned_to = 'No body'
+      end
+
+      @assigned_to = fields['System.AssignedTo']['displayName']
+    rescue StandardError => e
+      puts "Error: #{e.class}"
+      puts e.backtrace
+
+      exit 1
     end
 
     def state
@@ -65,6 +76,10 @@ module Accomplished
         iteration_path:,
         fields:
       }
+    end
+
+    def to_s
+      "#{type}, #{state}, AB##{id}, #{title}, #{url}"
     end
   end
 end

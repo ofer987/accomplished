@@ -42,27 +42,37 @@ module Accomplished
         .map { |item| item['id'] }
         .map(&:to_i)
     rescue StandardError => e
-      puts 'Error!'
-      puts e
+      puts "Error! #{e.class}"
+      puts e.backtrace
 
       exit 1
     end
 
     def get_work_items(org, project, work_item_ids)
-      work_item_ids = Array(work_item_ids).join(',')
+      max = 100
 
-      url = "https://dev.azure.com/#{org}/#{project}/_apis/wit/workitems?ids=#{work_item_ids}&api-version=7.0"
-      headers = {
-        'Authorization' => "Basic #{credentials}"
-      }
+      work_item_ids = Array(work_item_ids)
+      iterations = work_item_ids.size / max
 
-      response = RestClient.get url, headers
+      (iterations + 1).times.flat_map do |i|
+        minimum = i * max
+        maximum = (i + 1) * max
+        ids = work_item_ids[minimum...maximum].join(',')
+        # work_item_ids = Array(work_item_ids).max(max).join(',')
 
-      JSON.parse(response.body)['value']
-        .map { |item| WorkItem.new(item['id'], item['fields']) }
+        url = "https://dev.azure.com/#{org}/#{project}/_apis/wit/workitems?ids=#{ids}&api-version=7.0"
+        headers = {
+          'Authorization' => "Basic #{credentials}"
+        }
+
+        response = RestClient.get url, headers
+
+        JSON.parse(response.body)['value']
+          .map { |item| WorkItem.new(item['id'], item['fields']) }
+      end
     rescue StandardError => e
-      puts 'Error!'
-      puts e
+      puts "Error! #{e.class}"
+      puts e.backtrace
 
       exit 1
     end

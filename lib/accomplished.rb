@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'active_support'
 require 'base64'
 require 'rest-client'
 require 'mustache'

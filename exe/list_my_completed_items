@@ -25,3 +25,7 @@ work_items = client.get_work_items(org, project, ids)
 puts work_items
   .map(&:to_markdown)
   .join("\n")
+
+puts work_items
+  .map(&:to_s)
+  .join("\n")
